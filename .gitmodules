@@ -1,0 +1,6 @@
+[submodule ".haxelib/haxeui-core"]
+	path = .haxelib/haxeui-core
+	url = https://github.com/haxeui/haxeui-core
+[submodule ".haxelib/haxeui-html5"]
+	path = .haxelib/haxeui-html5
+	url = https://github.com/haxeui/haxeui-html5

@@ -1,0 +1,6 @@
+<module id="core">
+    <resources path="/Client/src/assets" prefix="assets" />
+    <components>
+        
+    </components>
+</module>

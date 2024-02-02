@@ -1,0 +1,4 @@
+package-lock.json
+build/client/*
+!build/client/index.html
+build/server/*

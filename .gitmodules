@@ -1,4 +1,0 @@
-[submodule ".haxelib/haxeui-core/git"]
-	path = ".haxelib/haxeui-core/git"
-	url = https://github.com/haxeui/haxeui-core
-	branch = master

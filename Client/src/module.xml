@@ -1,6 +1,17 @@
 <module id="core">
-    <resources path="/Client/src/assets" prefix="assets" />
+    <resources>
+        <resource path="/Client/src/assets/ico" prefix="icons" />
+        <resource path="/Client/src/assets/otf" prefix="fonts/otf" />
+    </resources>
     <components>
-        
     </components>
+    <themes>
+        <default>
+            <var name="primary" value="#04912c" />
+            <var name="secondary" value="#f2e8cf" />
+            <var name="background" value="#353a47" />
+            <var name="error" value="#bc4749" />
+            <var name="highlight" value="#064789" />
+        </default>
+    </themes>
 </module>

@@ -2,7 +2,7 @@
 git submodule init
 git submodule update
 cd build/server
-cp ../../package.json .
+cp -f ../../package.json .
 npm i
 cd ../..
 

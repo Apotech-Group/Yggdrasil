@@ -1,0 +1,5 @@
+-cp Client/src 
+--main Main
+--js build/client/Main.js 
+-L haxeui-html5 
+-L haxeui-core

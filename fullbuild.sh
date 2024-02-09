@@ -7,5 +7,5 @@ npm i
 cd ../..
 
 # compile
-tsc -v
+tsc
 haxe Client/build.hxml -v

@@ -81,7 +81,7 @@ export class v1 {
                     Deprecated Boolean NOT NULL DEFAULT False,
                     SerialNum TEXT NOT NULL PRIMARY KEY,
                     nodeLocation TEXT NOT NULL,
-                )
+                );
                 `).then(() => {
                     console.log('Done');
                 });
@@ -113,7 +113,7 @@ export class v1 {
                     --File upload of SOF
                     SOF BLOB NOT NULL,
                     
-                )
+                );
                 `).then(() => {
                     console.log('Done');
                 });

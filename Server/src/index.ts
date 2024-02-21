@@ -14,7 +14,6 @@ let apiv1: v1 = new v1(() => {
     //avoid setting up middleware and starting server until it's ready
     console.log('Setting up api middleware');
     app.use('/api/v1', cors<cors.CorsRequest>(), express.json(), apiv1.middleware);
-    console.log(apiv1);
     app.listen(8080);
     console.log('Listening on port 8080');
 });

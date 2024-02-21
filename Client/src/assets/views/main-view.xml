@@ -1,41 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<vbox styleName="background" style="margin: 0px; padding: 0px;" width="100%" height="100%">
+<vbox styleName="root" width="100%" height="100%">
     <style>
-        .background {
-            background-color: $background
+        .root {
+            margin: 0px;
+            padding: 0px;
+            background-color: #00ff00;
         }
-        .tabview {
+        .root > vbox: {
             margin: 0px;
             padding: 0px;
         }
-        .tabview > .box {
-            background-color: $background;
-            border: none;
+        .menubar {
+            margin: 0px;
+            padding:0px;
+            border-bottom-width: 1px;
         }
-        .tabbar {
-            border-bottom-width: 4px;
-            border-bottom-color: darken($highlight, 50);
+        .intangible {
+            margin: 0px;
+            padding: 0px;
+            color: #00000000;
+            background-color: #ff0000;
         }
-        .tabbar .tabbar-button {
-            border: none;
-            background-color: darken(#ffffff, 15);
-            border-bottom-width: 4px;
-            border-bottom-color: darken($highlight, 15);
-            color: darken($highlight, 15);
-        }
-        .tabbar-button-selected {
-            border-top: 2px solid $primary;
-            background-color: #ffffff;
-            border-bottom-color: $primary;
-            color: $primary;
+        .intangible > .box {
+            padding: 0px;
+            background-color: #ff0000;
         }
     </style>
-    <tabview width="100%" height="100%">
-        <box text="View" width="100%" height="100%" id="viewdata">
+    <menubar width="100%" height="5%">
+        <menu text="File">
 
-        </box>
-        <box text="Manage" width="100%" height="100%">
+        </menu>
+        <menu text="Data">
 
-        </box>
-    </tabview>
+        </menu>
+        <menu text="View">
+
+        </menu>
+    </menubar>
+    <hbox width="100%" height="95%" styleName="intangible">
+        <vbox width="75%" height="100%">
+            <label text="Node view" width="100%" />
+        </vbox>
+        <vbox width="25%" height="100%">
+            <label text="List View" width="100%" />
+
+        </vbox>
+    </hbox>
+
 </vbox>

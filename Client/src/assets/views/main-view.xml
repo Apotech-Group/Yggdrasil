@@ -4,7 +4,7 @@
         .root {
             margin: 0px;
             padding: 0px;
-            background-color: #00ff00;
+            spacing: 0px;
         }
         .root > vbox: {
             margin: 0px;
@@ -18,12 +18,11 @@
         .intangible {
             margin: 0px;
             padding: 0px;
+            spacing: 0px;
             color: #00000000;
-            background-color: #ff0000;
         }
         .intangible > .box {
             padding: 0px;
-            background-color: #ff0000;
         }
     </style>
     <menubar width="100%" height="5%">

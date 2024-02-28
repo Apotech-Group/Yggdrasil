@@ -1,5 +1,6 @@
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4"
+import { GraphQLScalarType } from 'graphql';
 import express, { RequestHandler } from "express";
 
 import sqlite3 from "sqlite3";
@@ -47,13 +48,55 @@ const resolvers = {
 
     },
     Mutation: {
-        async addCrossConnect(...params:[any]): Promise<boolean> {
+        async addCrossConnect(...params: [any]): Promise<boolean> {
             console.log(`AddCrossConnect called with params: ${params}`);
             return true;//TODO remove when done
         }
     }
 }
 
+const blobScalar = new GraphQLScalarType({
+    name: "BLOB",
+    description: "Raw buffer of hex data. Accepts array of ints, array of chars, or raw base64 string",
+    serialize(value) {
+        if (value instanceof Buffer) {
+            return value.toString('base64');
+        }
+        throw new Error("Cannot serialize incorrectly specified Buffer type");
+    },
+    parseValue(value): Buffer {
+        if (typeof value == 'string') {
+            let data = atob(value).split('');
+            let bytes = Buffer.alloc(data.length);
+            for (let index in data) {
+                bytes[index] = data[index].charCodeAt(0);
+            }
+            return bytes;
+        }
+        else if (value instanceof Array) {
+            const accepted = typeof value[0];
+            if (typeof accepted != 'string' || typeof accepted != 'number')
+                throw new Error(`Input array must be Array<string|number>, got Array<${typeof accepted}>`);
+            let bytes = Buffer.alloc(value.length);
+            value.map((val, idx) => {
+                if (typeof val != accepted)
+                    throw new Error('Multitype arrays are not accepted');
+                switch (typeof val) {
+                    case 'string':
+                        bytes[idx] = val.charCodeAt(0);
+                        break;
+                    case 'number':
+                        bytes[idx] = val;
+                        break;
+                    default:
+                        throw new Error('Could not parse array, got ' + (typeof val) + ' type when expecting ' + (typeof accepted));
+                }
+            });
+            return bytes;
+        }
+        throw new Error('Failed to parse input');
+    }
+})
 export class v1 {
     private ready: boolean;
 

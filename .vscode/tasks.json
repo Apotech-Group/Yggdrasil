@@ -1,0 +1,106 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Full build",
+            "type": "process",
+            "command": "./fullbuild.sh",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "runOptions": {
+                "instanceLimit": 1
+            },
+            "icon": {
+                "id": "circuit-board",
+                "color": "terminal.ansiGreen"
+            },
+            "isBuildCommand": true,
+            "presentation": {
+                "echo": false,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            }
+        },
+        {
+            "label": "pre-ts",
+            "type": "shell",
+            "hide": true,
+            "options": {
+                "cwd": "build/server"
+            },
+            "command": "cp -f ../../package.json .; npm i && npm audit fix",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            }
+        },
+        {
+            "type": "typescript",
+            "tsconfig": "tsconfig.json",
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "group": "build",
+            "label": "TS build",
+            "icon": {
+                "id": "tag",
+                "color": "terminal.ansiCyan"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            }
+        },
+        {
+            "label": "pre-haxe",
+            "type": "shell",
+            "hide": true,
+            "command": "git submodule init; git submodule update",
+            "presentation": {
+                "echo": false,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            }
+        },
+        {
+            "type": "haxe",
+            "args": "active configuration",
+            "dependsOn":[
+                "pre-haxe"
+            ],
+            "problemMatcher": [
+                "$haxe"
+            ],
+            "group": "build",
+            "label": "Haxe build",
+            "icon": {
+                "id": "tag",
+                "color": "terminal.ansiBlue"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        }
+    ]
+}

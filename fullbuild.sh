@@ -9,4 +9,4 @@ cd ../..
 
 # compile
 tsc
-haxe Client/build.hxml -v
+haxe Client/build.hxml

@@ -6,55 +6,6 @@ import express, { RequestHandler } from "express";
 import sqlite3 from "sqlite3";
 import { Database, open as dbOpen } from "sqlite";
 
-const schema = `#graphql
-enum CableType {
-    CAT4,
-    CAT5,
-    CAT6,
-    Fiber,
-    Virtual
-}
-
-type Node {
-    UUID:String,
-    name:String,
-    connections:[CrossConnect]
-}
-
-type CrossConnect {
-    from:Node,
-    to:Node,
-    type:CableType
-}
-
-type CCSearch {
-    byUUID(uuid:String):Node
-    byName(name:String):Node
-    all:[Node!]!
-}
-
-type Query {
-    crossconnect:CCSearch!
-}
-
-type Mutation {
-    addCrossConnect(from:String, to:String, type:CableType):Boolean
-    addNode(nodeName:String):Node
-}
-`
-
-const resolvers = {
-    Query: {
-
-    },
-    Mutation: {
-        async addCrossConnect(...params: [any]): Promise<boolean> {
-            console.log(`AddCrossConnect called with params: ${params}`);
-            return true;//TODO remove when done
-        }
-    }
-}
-
 const blobScalar = new GraphQLScalarType({
     name: "BLOB",
     description: "Raw buffer of hex data. Accepts array of ints, array of chars, or raw base64 string",
@@ -97,6 +48,61 @@ const blobScalar = new GraphQLScalarType({
         throw new Error('Failed to parse input');
     }
 })
+
+const schema = `#graphql
+enum CableType {
+    CAT4,
+    CAT5,
+    CAT6,
+    Fiber,
+    Virtual
+}
+enum ImgType {
+    SVG,
+    JPG
+}
+
+type Node {
+    UUID:String,
+    name:String,
+    connections:[CrossConnect]
+}
+
+type CrossConnect {
+    from:Node,
+    to:Node,
+    type:CableType
+}
+
+type CCSearch {
+    byUUID(uuid:String):Node
+    byName(name:String):Node
+    all:[Node!]!
+}
+union ImgData = String | BLOB
+type Query {
+    crossconnect:CCSearch!
+    img(imgType:ImgType):ImgData
+}
+
+type Mutation {
+    addCrossConnect(from:String, to:String, type:CableType):Boolean
+    addNode(nodeName:String):Node
+}
+`
+
+const resolvers = {
+    Query: {
+
+    },
+    Mutation: {
+        async addCrossConnect(...params: [any]): Promise<boolean> {
+            console.log(`AddCrossConnect called with params: ${params}`);
+            return true;//TODO remove when done
+        }
+    },
+    BLOB: blobScalar
+}
 export class v1 {
     private ready: boolean;
 

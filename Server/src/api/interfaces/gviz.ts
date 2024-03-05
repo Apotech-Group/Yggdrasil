@@ -112,6 +112,14 @@ export default class gviz {
             SELECT * FROM CCDB;
             SELECT * FROM NODEDB;
             `);
+            console.log(existing);
+        }
+        {
+            await db.exec(/*sql*/`
+            INSERT INTO CCDB (XCID, startID, endID, runType, runLength, SOF) VALUES (
+                
+            )
+            `)
         }
     }
     public load(db: Database<sqlite3.Database, sqlite3.Statement>) {

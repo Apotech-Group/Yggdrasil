@@ -175,8 +175,12 @@ export class v1 {
             await server.start();
             console.log('Instantiating graph manager');
             this.ccmanager = new gviz();
-            //DEBUG
+            //DEBUG START
+            let uuid = this.ccmanager.addNode('Test Node');
+            let uuid2 = this.ccmanager.addNode('Test Node 2');
+            uuid = this.ccmanager.connect(uuid, uuid2, "Virtual");
             this.ccmanager.save(this.database);
+            //DEBUG END
             console.log('Finishing up');
             this.middleware = expressMiddleware(server);
             this.ready = true;

@@ -109,8 +109,9 @@ export default class gviz {
         ]));
         {
             const existing:Array<string> = await db.all(/*sql*/`
-            SELECT * FROM 
-            `)
+            SELECT * FROM CCDB;
+            SELECT * FROM NODEDB;
+            `);
         }
     }
     public load(db: Database<sqlite3.Database, sqlite3.Statement>) {

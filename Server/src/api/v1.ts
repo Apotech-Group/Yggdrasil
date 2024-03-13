@@ -5,7 +5,8 @@ import express, { RequestHandler } from "express";
 
 import sqlite3 from "sqlite3";
 import { Database, open as dbOpen } from "sqlite";
-import gviz from "./interfaces/gviz";
+import manager from "./interfaces/manager";
+import * as uuid from 'uuid';
 
 const blobScalar = new GraphQLScalarType({
     name: "BLOB",
@@ -110,7 +111,7 @@ export class v1 {
 
     public middleware: RequestHandler = () => { };
     public database: Database<sqlite3.Database, sqlite3.Statement> | undefined;
-    public ccmanager:gviz = new gviz();//ignore this it gets reassigned
+    public ccmanager:manager = new manager();//ignore this it gets reassigned
 
     public constructor(onReady: () => void) {
         this.ready = false;
@@ -174,16 +175,19 @@ export class v1 {
             });
             await server.start();
             console.log('Instantiating graph manager');
-            this.ccmanager = new gviz();
-            //DEBUG START
-            let uuid = this.ccmanager.addNode('Test Node');
-            let uuid2 = this.ccmanager.addNode('Test Node 2');
-            uuid = this.ccmanager.connect(uuid, uuid2, "Virtual");
-            this.ccmanager.save(this.database);
-            //DEBUG END
+            this.ccmanager = await manager.fromDB(this.database);
             console.log('Finishing up');
             this.middleware = expressMiddleware(server);
             this.ready = true;
+            //DEBUG START
+            console.debug('DEBUG START');
+            console.log(uuid.v4());
+            let nodeA = this.ccmanager.addNode('testnode', [], 'test location', '000001');
+            let nodeB = this.ccmanager.addNode('testnode2', [], 'test location', '000002');
+            this.ccmanager.connect(nodeA, nodeB, 'Virtual');
+            this.ccmanager.save(this.database);
+            console.debug('DEBUG END');
+            //DEBUG END
             console.log('Firing callback');
             onReady();
         })();
